@@ -1,0 +1,16 @@
+#pragma kernel Randomize
+
+RWTexture2D<float4> target;
+float4 resolution;
+float time;
+
+float rand(float2 v)
+{
+    return frac(sin(dot(v.xy, float2(12.9898 + time, 78.233))) * 43758.5453);
+}
+
+[numthreads(8,8,1)]
+void Randomize(uint3 id : SV_DispatchThreadID)
+{
+    target[id.xy] = float4(rand(id.xy), rand(float2(id.x, rand(float2(id.y, id.x)))), rand(float2(id.y, rand(float2(id.x, id.y)))), 0.0);
+}
