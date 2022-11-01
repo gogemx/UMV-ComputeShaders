@@ -1,0 +1,11 @@
+#pragma kernel HandsOn
+
+RWTexture2D<float4> target;
+float4 resolution;
+float time;
+
+[numthreads(8,8,1)]
+void HandsOn(uint3 id : SV_DispatchThreadID)
+{
+    target[id.xy] = float4(time + id.x / resolution.x, id.y / resolution.y, 0.0, 0.0);
+}
